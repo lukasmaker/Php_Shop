@@ -85,6 +85,23 @@
             }
         }
 		
+        static function addUser($login, $password, $name, $surname, $age){
+			require_once 'dbConfig.php';
+			//$conn = new mysqli($host, $db_user, $db_password, $db_name);
+			$conn = new mysqli('localhost', 'root', '', 'sklep');
+
+			if ($conn->connect_errno ==0){
+				$query = "INSERT INTO users(`login`, `password`, `name`, `surname`, `role`, `age`) VALUES ('$login', 
+				'$password', '$name', '$surname', 'user', '$age')";
+				$resut = $conn->query($query);
+			}
+			else{
+				echo 'Nie udało się polaczyc z baza';
+				die;
+			}
+		}
+        
+	
         
 	}
 ?>
