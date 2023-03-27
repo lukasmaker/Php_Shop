@@ -101,7 +101,40 @@
 			}
 		}
         
-	
+        static function changeUser($login, $password, $name, $surname, $age){
+			require_once 'dbConfig.php';
+			//$conn = new mysqli($host, $db_user, $db_password, $db_name);
+			$conn = new mysqli('localhost', 'root', '', 'sklep');
+
+			if ($conn->connect_errno ==0){
+				$query = "UPDATE `users` SET `password`='$password', `name`='$name', `surname`='$surname', `age`='$age' WHERE `login`='$login'";
+				// $query = "INSERT INTO users(`login`, `password`, `name`, `surname`, `role`, `age`) VALUES ('$login', 
+				// '$password', '$name', '$surname', 'user', '$age')";
+				$resut = $conn->query($query);
+			}
+			else{
+				echo 'Nie udało się polaczyc z baza';
+				die;
+			}
+		}
+
+        static function changeUserRole($role, $id){
+			require_once 'dbConfig.php';
+			$conn = new mysqli($host, $db_user, $db_password, $db_name);
+			//$conn = new mysqli('localhost', 'root', '', 'sklep');
+			if ($conn->connect_errno ==0){
+				if ($role==="admin"){
+                    $query = "UPDATE `users` SET `role`='user' WHERE id=$id";
+                }else {
+                    $query = "UPDATE `users` SET `role`='admin' WHERE id=$id";
+                }
+				$resut = $conn->query($query);
+			}
+			else{
+				echo 'Nie udało się polaczyc z baza';
+				die;
+			}
+		}
         
 	}
 ?>
